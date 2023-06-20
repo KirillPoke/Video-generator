@@ -10,7 +10,11 @@ from text_generator import generate_text
 
 # Set your OpenAI API key
 openai.api_key = API_KEY
-os.remove("final_video.mp4")
+try:
+    os.remove("final_video.mp4")
+except OSError:
+    pass
+
 # Read the text file
 text = generate_text()
 
@@ -23,7 +27,7 @@ for para in paragraphs[:-1]:
     response = openai.Image.create(
         prompt=para.strip(),
         n=1,
-        size="1024x1024"
+        size="256x256"
     )
     print("Generate New AI Image From Paragraph...")
     image_url = response['data'][0]['url']
@@ -72,7 +76,7 @@ final_video = concatenate_videoclips(clips, method="compose")
 final_video = final_video.write_videofile("final_video.mp4")
 print("The Final Video Has Been Created Successfully!")
 for directory in ['images', 'audio', 'videos']:
-    files = glob(f'{directory}*')
+    files = glob(f'{directory}/*')
     for f in files:
         os.remove(f)
 
