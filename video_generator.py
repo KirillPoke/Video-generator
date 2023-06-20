@@ -3,22 +3,19 @@ import re
 import urllib.request
 from gtts import gTTS
 from moviepy.editor import *
-from api_key import API_KEY
+from openai_key import API_KEY
+from glob import glob
+
+from text_generator import generate_text
 
 # Set your OpenAI API key
 openai.api_key = API_KEY
-
+os.remove("final_video.mp4")
 # Read the text file
-with open("generated_text.txt", "r") as file:
-    text = file.read()
+text = generate_text()
 
 # Split the text by , and .
 paragraphs = re.split(r"[,.]", text)
-
-#Create Necessary Folders
-os.makedirs("audio")
-os.makedirs("images")
-os.makedirs("videos")
 
 # Loop through each paragraph and generate an image for each
 i=1
@@ -74,3 +71,8 @@ print("Concatenate All The Clips to Create a Final Video...")
 final_video = concatenate_videoclips(clips, method="compose")
 final_video = final_video.write_videofile("final_video.mp4")
 print("The Final Video Has Been Created Successfully!")
+for directory in ['images', 'audio', 'videos']:
+    files = glob(f'{directory}*')
+    for f in files:
+        os.remove(f)
+

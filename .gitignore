@@ -1,2 +1,10 @@
 venv
 .idea
+__pycache__
+
+openai_key.py
+
+videos/*
+audio/*
+images/*
+final_video.mp4
