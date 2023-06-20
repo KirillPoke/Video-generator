@@ -1,5 +1,4 @@
 import openai
-import re
 from api_key import API_KEY
 
 openai.api_key = API_KEY
